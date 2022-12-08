@@ -121,7 +121,7 @@ func DefaultSourceLoader(filename string) ([]byte, error) {
 			if errors.Is(err, syscall.Errno(0x7b)) { // ERROR_INVALID_NAME, The filename, directory name, or volume label syntax is incorrect.
 				err = ModuleFileDoesNotExistError
 			} else {
-				// temporary workaround for https://github.com/dop251/goja_nodejs/issues/21
+				// temporary workaround for https://github.com/mariotoffia/goja_nodejs/issues/21
 				fi, err1 := os.Stat(fp)
 				if err1 == nil && fi.IsDir() {
 					err = ModuleFileDoesNotExistError

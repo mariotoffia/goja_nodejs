@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/dop251/goja"
-	"github.com/dop251/goja_nodejs/console"
-	"github.com/dop251/goja_nodejs/require"
+	"github.com/mariotoffia/goja_nodejs/console"
+	"github.com/mariotoffia/goja_nodejs/require"
 )
 
 type job struct {
