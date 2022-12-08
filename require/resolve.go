@@ -46,7 +46,7 @@ func (r *RequireModule) resolve(modpath string) (module *js.Object, err error) {
 		}
 	}
 
-	if module == nil && err == nil {
+	if module == nil && err != nil {
 		module, err = r.loadNative(modpath)
 		if err == nil {
 			return
