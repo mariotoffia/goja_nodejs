@@ -9,6 +9,8 @@ import (
 	js "github.com/dop251/goja"
 )
 
+var PrioritizeNative = false
+
 // NodeJS module search algorithm described by
 // https://nodejs.org/api/modules.html#modules_all_together
 func (r *RequireModule) resolve(modpath string) (module *js.Object, err error) {
@@ -26,6 +28,14 @@ func (r *RequireModule) resolve(modpath string) (module *js.Object, err error) {
 	}
 
 	p := path.Join(start, modpath)
+
+	if PrioritizeNative {
+		module, err = r.loadNative(modpath)
+		if err == nil {
+			return
+		}
+	}
+
 	if strings.HasPrefix(origPath, "./") ||
 		strings.HasPrefix(origPath, "/") || strings.HasPrefix(origPath, "../") ||
 		origPath == "." || origPath == ".." {
@@ -46,7 +56,7 @@ func (r *RequireModule) resolve(modpath string) (module *js.Object, err error) {
 		}
 	}
 
-	if module == nil && err != nil {
+	if module == nil && err == nil {
 		module, err = r.loadNative(modpath)
 		if err == nil {
 			return
